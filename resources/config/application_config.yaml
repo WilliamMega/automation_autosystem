@@ -1,0 +1,11 @@
+#desktop
+winappdriver_dir: C:\\Program Files\\Windows Application Driver\\WinAppDriver.exe
+auto_system_dir: C:\\autosystem\\main.exe
+TryBtnNoHome: 2
+timeout_3: 3s
+timeout_5: 5s
+timeout_10: 10s
+timeout_20: 20s
+timeout_30: 30s
+
+#other
