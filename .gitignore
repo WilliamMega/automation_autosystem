@@ -1,4 +1,6 @@
-/target/
+/allure-report/
+/allure-results/
+/report/
 # Files #
 ###################
 *.html
