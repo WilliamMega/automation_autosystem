@@ -1,4 +1,6 @@
-/target/
+/allure-report/
+/allure-results/
+/report/
 # Files #
 ###################
 *.html
@@ -37,7 +39,6 @@ dist
 log.html
 report.html
 output.xml
-user_pass_config.yaml
 
 # Logs and databases #
 ######################
