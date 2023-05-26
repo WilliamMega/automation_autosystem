@@ -3,8 +3,8 @@ Documentation     Projeto para automatizar os principais fluxos do sistema AutoS
 Resource          ../../../resources/imports.robot
 Resource          ../../../keywords/desktop/desktop_imports.robot
 
-Test Setup        Abrir Aplicacao Main
-Test Teardown     Fechar Aplicacao
+Suite Setup       Abrir Aplicacao Main
+Suite Teardown    Fechar Aplicacao
 
 *** Variables ***
 

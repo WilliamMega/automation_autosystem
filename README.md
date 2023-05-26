@@ -166,6 +166,20 @@ robot -d \report -i smoketest Testes
 | robot -d \report -i smoketest Testes 												| Executando por TAGS											 |
 
 ## TESTES CONTINUOS
+
+Os tests continuos vão acontecer que uma versão do AutoSystem esteja liberada (Exe) para testes, com isso será iniciado a execução da automação em uma máquina
+virtual.
+
+Teremos inicialmente 3 grandes testes a serem executados:
+
+Tags [SmokeTeste] [MiniRegressivo] [Regressivo].
+
+SmokeTeste: Abrir as principais telas (Menus e SubMenus) do sistema;
+MiniRegressivo: Regressivo compactado do sistema;
+Regressivo: Regressi completo do sistema;
+
+Para executar cada teste, basta acessar a máquina virtual e executar o respectivo Job no Jenkins, conforme orientação abaixo.
+
 ### JENKINS
 O processo do Jenkins precisa ser executado como um usuário e não como um serviço, para que o ambiente de desktop correto seja alocado. Isso significa que o Jenkins deve executar o cmd na inicialização.
 
@@ -239,7 +253,27 @@ java -jar jenkins.war --httpPort=8080
 Obs.: "AutoSystem-SmokeTeste" é o nome do Job.
 
 ### PRE-REQUISITOS
-Em desenvolvimento
+Visual Studio Code: https://code.visualstudio.com/download​
+
+ Plugins:​
+
+    Robot Framework Language Server - Robocorp;​
+
+    Material Icon Theme;​
+
+Python: https://www.python.org/downloads/ - Version: 3.11​
+
+RPA Desktop: https://robocorp.com/docs/libraries/rpa-framework/rpa-desktop​
+
+RPAFramework-Recognition: https://pypi.org/project/rpaframework-recognition/​
+
+Allure-robotframework: https://pypi.org/project/allure-robotframework/​
+
+    Baixar e configurar no Path do Windows: https://github.com/allure-framework/allure2/releases (Version: 2.22.0)​
+
+       Exemplo: C:\allure-2.22.0\bin -> Variáveis do ambiente -> Variáveis do sistema -> Path​
+
+Accessibility Insights For Windows (Inspector from elements): (https://accessibilityinsights.io/downloads/)
 
 ### ETAPAS
 * Preparação do ambiente
