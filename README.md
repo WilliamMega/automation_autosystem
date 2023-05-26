@@ -167,7 +167,76 @@ robot -d \report -i smoketest Testes
 
 ## TESTES CONTINUOS
 ### JENKINS
-Em desenvolvimento
+O processo do Jenkins precisa ser executado como um usuário e não como um serviço, para que o ambiente de desktop correto seja alocado. Isso significa que o Jenkins deve executar o cmd na inicialização.
+
+1 - Realizar download no link abaixo:
+
+https://www.jenkins.io/download/ (Generic Java package (.war));
+
+2 - Criar uma pasta no c: "Jenkins" e mover o pacote "jenkins.war" para essa pasta;
+
+3 - Abrir o cmd:
+
+java -jar jenkins.war --httpPort=8080
+
+4 - Abrir o browser e entrar no seguinte endereço "http://localhost:8080/";
+- Instalar os principais plugins;
+- Instalar o plugin "Robot Framework plugin";
+
+5 - Configurar um job; 
+Baixar o código da automação (GitHub);
+
+6 - Ir em "Manage Jenkins" -> "Script Console":
+
+Link de apoio: https://wiki.jenkins.io/JENKINS/Configuring-Content-Security-Policy.html
+
+Unset the header:
+
+E inserir o comando abaixo:
+
+System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "")
+
+Clicar em Run em seguida.
+
+7 - Ir no recurso "General" dentro da Job:
+
+Marcar o check box "Use custom workspace?";
+Informar o diretório "C:\Automacao\RobotFrameWork" (Exemplo);
+Informar o Display Name "AutoSystem-SmokeTeste" (Exemplo);
+
+8 - Ir no recurso "Build Steps" dentro da Job:
+
+Inserir o seguinte passo "Execute Windows batch command" e configurar conforme abaixo:
+
+Exemplo:
+
+cd C:\Automacao\RobotFramework
+robot -d .\report .\testcases\desktop\SmokeTest\SmokeTest.robot
+echo Completed
+
+8 - Ir no recurso "Post-build Actions" dentro da Job:
+
+Inserir o relatório "Publish Robot Framework test results" e configurar conforme abaixo:
+
+Directory of Robot output "C:\Automacao\RobotFramework\report";
+Informar nos campos "Thresholds for build resul" os valores "0.0";
+
+9 - Como executar a Job no Jenkins?
+
+Como iremos trabalhar com a interface grafica (GUI Windows), o RPA Desktop precisa ser executado manualmente e a automação precisa trabalhar alguns fluxo de exceção.
+
+- Suba o Jenkins (cmd):
+
+java -jar jenkins.war --httpPort=8080
+
+- Vá em "Manage Jenkins" > "Jenkins CLI" e baixe o "jenkins-cli.jar";
+- Mova o pacote "jenkins-cli.jar" para a seguinte pasta "C:/jenkins";
+- Vá em "Manage Jenkins" > "Configure Global Security", dentro de "Authorization" e selecione a opção "Anyone can do anything";
+- Abra outro cmd e digite:
+
+> java -jar jenkins-cli.jar -s http://localhost:8080/ build AutoSystem-SmokeTeste
+
+Obs.: "AutoSystem-SmokeTeste" é o nome do Job.
 
 ### PRE-REQUISITOS
 Em desenvolvimento

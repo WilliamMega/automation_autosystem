@@ -13,3 +13,8 @@ Cenário 1: Validar Tela Transferencia entre Contas
     [Tags]    SmoketTest
     Realizar Login
     Acessar Tela Transferencia entre Contas
+
+Cenário 1: Validar Tela Transferencia entre Contas
+    [Tags]    SmoketTest
+    Realizar Login
+    Acessar Tela Transferencia entre Contas    
