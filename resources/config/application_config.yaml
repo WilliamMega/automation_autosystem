@@ -5,6 +5,7 @@ TryBtnNoHome: 2
 timeout_3: 3s
 timeout_5: 5s
 timeout_10: 10s
+timeout_15: 15s
 timeout_20: 20s
 timeout_30: 30s
 

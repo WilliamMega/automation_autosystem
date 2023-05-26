@@ -16,7 +16,15 @@ Abrir Aplicacao Main e Realizar Login
     ${AutoSystemApp}=    Open application    ${auto_system_main_dir}
     Sleep    ${timeout_10}
     Click    ${LocatorHomeTelaInicialMain} 
-    Realizar Login   
+    Realizar Login - MSG
+
+Realizar Login - MSG
+    Type text    ${user}
+    Press Keys   tab
+    Type text    ${pass}
+    Press Keys   enter
+    Sleep    ${timeout_15}
+    Click    ${LocatorHomeBtnNao}
 
 Realizar Login
     Type text    ${user}
