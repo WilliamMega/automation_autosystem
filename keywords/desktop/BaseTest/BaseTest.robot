@@ -3,13 +3,14 @@ Resource    ../../../resources/imports.robot
 Variables   Locators/locators.yaml
 
 *** Variables ***
+${LocatorHomeTelaInicialMain}=     image:${EXECDIR}${btn_Home_Tela_Inicial_Main}
 ${LocatorHomeBtnNao}=     image:${EXECDIR}${btn_Home_Nao}
 
 *** Keywords ***
-Abrir Aplicacao
-    ${AutoSystemApp}=    Open application    ${auto_system_dir}
+Abrir Aplicacao Main
+    ${AutoSystemApp}=    Open application    ${auto_system_main_dir}
     Sleep    ${timeout_10}
-    Sleep    1s
+    Click    ${LocatorHomeTelaInicialMain}
 
 Realizar Login
     Type text    ${user}
