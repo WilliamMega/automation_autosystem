@@ -12,6 +12,12 @@ Abrir Aplicacao Main
     Sleep    ${timeout_10}
     Click    ${LocatorHomeTelaInicialMain}
 
+Abrir Aplicacao Main e Realizar Login
+    ${AutoSystemApp}=    Open application    ${auto_system_main_dir}
+    Sleep    ${timeout_10}
+    Click    ${LocatorHomeTelaInicialMain} 
+    Realizar Login   
+
 Realizar Login
     Type text    ${user}
     Press Keys   tab
@@ -33,5 +39,5 @@ Realizar Login
     END
 
 Fechar Aplicacao
-    Sleep    ${timeout_5}
+    Sleep    ${timeout_3}
     Close all applications

@@ -3,7 +3,7 @@ Documentation     Projeto para automatizar os principais fluxos do sistema AutoS
 Resource          ../../../resources/imports.robot
 Resource          ../../../keywords/desktop/desktop_imports.robot
 
-Suite Setup       Abrir Aplicacao Main
+Suite Setup       Abrir Aplicacao Main e Realizar Login
 Suite Teardown    Fechar Aplicacao
 
 *** Variables ***
@@ -11,10 +11,8 @@ Suite Teardown    Fechar Aplicacao
 *** Test Cases ***
 Cenário 1: Validar Tela Transferencia entre Contas
     [Tags]    SmoketTest
-    Realizar Login
     Acessar Tela Transferencia entre Contas
 
 Cenário 1: Validar Tela Contas a Pagar
     [Tags]    SmoketTest
-    Realizar Login
     Acessar Tela Contas a Pagar
