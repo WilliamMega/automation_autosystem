@@ -49,3 +49,16 @@ Realizar Login
 Fechar Aplicacao
     Sleep    ${timeout_3}
     Close all applications
+
+TestLink
+    ValidaStatus ${TEST NAME}
+    Sleep    ${timeout_3}
+
+#INTEGRAÇÃO COM TESTLINK
+ValidaStatus ${TEST NAME}
+    Run Keyword If Test Passed    Results ${TEST NAME}, p
+    Run Keyword If Test Failed    Results ${TEST NAME}, f
+ 
+Results ${TEST NAME}, ${Status}
+    update_Status_TestCase    ${TEST NAME}    ${Status}
+#FIM INTEGRAÇÃO COM TESTLINK    

@@ -8,5 +8,6 @@ Library     OperatingSystem
 Library     Process
 Library     RPA.Desktop
 Library     String
+Library     ./IntegraTestLink/IntegraTestLink.py
 Variables   config/application_config.yaml
 Variables   config/user_pass_config.yaml
