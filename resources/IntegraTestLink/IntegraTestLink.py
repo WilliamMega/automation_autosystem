@@ -6,7 +6,7 @@ from    datetime import datetime
  
 #Carrega as variáveis de ambiente para conexão
 os.environ ["TESTLINK_API_PYTHON_SERVER_URL"] = "https://testlink.linx.com.br/lib/api/xmlrpc/v1/xmlrpc.php"
-os.environ ["TESTLINK_API_PYTHON_DEVKEY"] = "99be1c32d7477d5af5e259dd68a3e05b"
+os.environ ["TESTLINK_API_PYTHON_DEVKEY"] = "4d83931f022e93983ee8e2ae27ecc2a4"
  
 #Nome do Projeto
 Projeto = "AutoSystem"
@@ -19,9 +19,9 @@ Note = "Teste automatizado executado via Robot Framework e integração via Test
 #sobreescrever o teste ou adicionar na lista
 OverWrite = True
 #Chave do usuario
-DevKey = "99be1c32d7477d5af5e259dd68a3e05b"
+DevKey = "4d83931f022e93983ee8e2ae27ecc2a4"
 #Usuario
-user = "william.gsoares"
+user = "robot.postautosi"
 # URL da api do testlink
 UrlTestLink = 'https://testlink.linx.com.br/lib/api/xmlrpc/v1/xmlrpc.php'
 TimeExec = '1'
