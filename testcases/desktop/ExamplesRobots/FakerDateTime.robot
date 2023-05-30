@@ -65,7 +65,6 @@ Teste dados fakes - Datas
 
 *** Test Cases ***
 Cenário 1: Validar Tela Transferencia entre Contas
-    [Tags]    SmoketTest
     ##Realizar Login
     ##Acessar Tela Transferencia entre Contas
     Exemplos relacionados a pessoa
@@ -74,7 +73,6 @@ Cenário 1: Validar Tela Transferencia entre Contas
     Teste dados fakes
 
 Cenário 2: Validar FakerLibrary
-    [Tags]    MiniRegressivo
     ##Realizar Login
     ##Acessar Tela Transferencia entre Contas
     Exemplos relacionados a pessoa
