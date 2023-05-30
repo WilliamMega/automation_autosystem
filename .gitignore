@@ -1,6 +1,8 @@
-/allure-report/
-/allure-results/
-/report/
+# Folders #
+###################
+allure-report/
+allure-results/
+report/
 # Files #
 ###################
 *.html
