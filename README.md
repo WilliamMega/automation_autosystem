@@ -11,6 +11,7 @@ Requisitos de software necessários para configuração do ambiente de desenvolv
 * Python [download](https://www.python.org/downloads/) - Version: 3.11
 * RPA Framework
 * RPA Desktop
+* TestLink-API-Python-client
 * RPAFramework-Recognition
 	* Baixar e configurar no Path do Windows: https://github.com/allure-framework/allure2/releases (Version: 2.22.0)
 	* Exemplo: C:\allure-2.22.0\bin -> Variaveis do ambiente -> Variaveis do sistema -> Path
@@ -19,20 +20,25 @@ Requisitos de software necessários para configuração do ambiente de desenvolv
 
 
 ## ESTRUTURA DO PROJETO
-| Diretório                						| finalidade                                                                                   | 
+| Diretório                			| finalidade                                                                                   | 
 |-----------------------------------------------|----------------------------------------------------------------------------------------------|
-| keywords\desktop         						| Funcionalidades implementadas (Palavras chaves) que devem ser utilizadas nos tests cases     |
-| desktop_imports.robot    						| Arquivo que possui as resources das Keywords na pasta keywords\desktop                       |
-| keywords\desktop\xxx\locators 				| Configuração dos locators conforme suas Keywords (Substituir o nome da pasta "xxx")          |
+| allure-report					| Depois que o relatório é gerado (Allure serve ou Allure Open) é disponibilizado o index.html |
+| allure-results				| Armazenamento do relatório Allure e logs gerado após execução 			       |
+| datadriven					| Armazenamento dos arquivos a serem utilizados no DataDriven (.csv)			       |
+| keywords\desktop         			| Funcionalidades implementadas (Palavras chaves) que devem ser utilizadas nos tests cases     |
+| desktop_imports.robot    			| Arquivo que possui as resources das Keywords na pasta keywords\desktop                       |
+| keywords\desktop\xxx\locators 		| Configuração dos locators conforme suas Keywords (Substituir o nome da pasta "xxx")          |
 | keywords\desktop\xxx\locators\locators.yaml	| Mapeamentos dos locators da respectiva Keywords, escritos em arquivos yaml                   |
 | keywords\desktop\xxx\Locators\yyy           	| Repositório responsavel por armazenar as imagens (Locators) conforme suas Keywords           |
-| report				   						| Armazenamento do relatorio Nativo e logs gerado após execução								   |
-| allure_results				   			    | Armazenamento do relatorio Allure e logs gerado após execução								   |
-| resources\config         						| Configuração das principais variaveis da automação Desktop, escritos em arquivos yaml        |
-| resources\imports.robot  						| Configuração das principais bibliotecas utilizadas na automação                              |
-| testcases\desktop           					| Configuração dos macros diretórios para execução das suites de teste (Smoke/Regressivo)      |   
-| testcases\desktop\ExamplesRobots				| Exemplos dos arquivos .robot para trabalhar com diferentes bibliotecas				       |   
-| requirements.txt	       						| Armazena informações sobre todas as bibliotecas, módulos e pacotes específicos do projeto    |
+| keywords\desktop\BaseTest\BaseTest.robot      | Classe responsavel pelas funções basicas do projeto (Open/Closet/TestLink/ScreenShot)        | 
+| keywords\desktop\Utils			| Classes Utils para apoiar o projeto de automação					       |
+| report				   	| Armazenamento do relatorio Nativo e logs gerado após execução                                |
+| resources\config         			| Configuração das principais variaveis da automação Desktop, escritos em arquivos yaml        |
+| resources\imports.robot  			| Configuração das principais bibliotecas utilizadas na automação                              |
+| resources\IntegraTestLink			| Repositorio responsavel por integrar com o TestLink                                          |
+| testcases\desktop           			| Configuração dos macros diretórios para execução das suites de teste (Smoke/Regressivo)      |   
+| testcases\desktop\ExamplesRobots		| Exemplos dos arquivos .robot para trabalhar com diferentes bibliotecas		       |   
+| requirements.txt	       			| Armazena informações sobre todas as bibliotecas, módulos e pacotes específicos do projeto    |
                                         
 ## SNIPPETS
 
@@ -86,10 +92,9 @@ Nos dois diretórios abaixo, segue explicação:
  conjunto similar das funcionalidades do sistema.
 2 - keywords\desktop\xxx\locators\locators.yaml: Arquivo responsavel por mapear os locators da respectiva Keywords, escritos em arquivos yaml
 
-Informação importante sobre Locatos:​
-​
-Por limitações da aplicação do AutoSystem não é possível encontrar os elementos utilizando o Accessibility Insights For Windows, dessa forma iremos utilizar os recursos do teclado (Setas, TAB, Enter e etc) para interagir com os elementos. Além disso iremos utilizar imagens para encontrar determinados elementos.
+Informação importante sobre Locatos:
 
+Por limitações da aplicação do AutoSystem não é possível encontrar os elementos utilizando o Accessibility Insights For Windows, dessa forma iremos utilizar os recursos do teclado (Setas, TAB, Enter e etc) para interagir com os elementos. Além disso iremos utilizar imagens para encontrar determinados elementos.
 
 ### KEYWORDS
 
@@ -103,24 +108,36 @@ robot -d .\report .\testcases\desktop\SmokeTest\SmokeTest.robot
 ## GERAR RELATÓRIO NATIVO DO ROBOT FRAMEWORK PASSANDO TAGS
 
 robot -d .\report -i SmoketTest .\testcases\desktop\SmokeTest\SmokeTest.robot
+robot -d .\report -i SmoketTest .\testcases\desktop\
+robot -d .\report -i MiniRegressivo .\testcases\desktop\
+robot -d .\report -i Regressivo .\testcases\desktop\
 
 Obs.: Sempre passar a pasta "report" (Não mudar esse diretório).
 
 ## GERAR RELATÓRIO NATIVO E DO ALLURE
 
-robot --listener 'allure_robotframework;./allure_results' -d .\report .\testcases\desktop\SmokeTest\SmokeTest.robot
+Executar os seguintes comandos para limpar as pastas:
 
-"allure_results" é referente aos artefatos do relatório do Allure;
+"rmdir allure-report"
+"rmdir allure-results"
+
+Run With Tags:
+
+robot --listener 'allure_robotframework;./allure-results' -d .\report -i SmoketTest .\testcases\desktop\
+robot --listener 'allure_robotframework;./allure-results' -d .\report -i MiniRegressivo .\testcases\desktop\
+robot --listener 'allure_robotframework;./allure-results' -d .\report -i Regressivo .\testcases\desktop\
+
+"allure-results" é referente aos artefatos do relatório do Allure;
 "report" é referente aos artefatos do relatório Nativo;
 
 Após gerar os artefatos do allure, é necessário executar o seguinte comando:
 
-allure serve ./allure_results
+"allure generate allure-results --clean -o allure-report"
+"allure open allure-report" ou "allure serve ./allure-results"
 
-O relatório ficará disponivel no endereço abaixo:
+O relatório ficará disponível no endereço abaixo:
 
 - http://192.168.0.29:52403/index.html
-
 
 ## DOWNLOAD DO PROJETO TEMPLATE PARA SUA MÁQUINA LOCAL
 Faça o donwload do template no repositório de código para utilizar no seu projeto em especifico, 
@@ -136,34 +153,49 @@ Abaixo está a lista de frameworks utilizados nesse projeto
 * Library Process - Biblioteca Robot Framework para processos em execução.
 * Library OperatingSystem - Biblioteca padrão do Robot Framework que permite que várias tarefas relacionadas ao sistema operacional sejam executadas no sistema em que o Robot Framework está sendo executado. Ele pode, entre outras coisas, executar comandos (por exemplo, Executar ), criar e remover arquivos e diretórios (por exemplo, Criar Arquivo , Remover Diretório ), verificar se os arquivos ou diretórios existem ou contêm algo (por exemplo, Arquivo Deve Existir , Diretório Deve Estar Vazio ) e manipular variáveis ​​de ambiente (por exemplo, Definir variável de ambiente ).
 * Library DateTime - biblioteca padrão do Robot Framework que suporta a criação e conversão de valores de data e hora (por exemplo, Get Current Date , Convert Time ), bem como fazer cálculos simples com eles (por exemplo, Subtract Time From Date , Add Time To Time ).
+* TestLink-API-Python-client: Biblioteca para integrar com o TestLink;
 
 ## COMANDO PARA EXECUTAR OS TESTES
 Com o prompt de comando acesse a pasta do projeto.
 
-* single run:
-        robot .\testcases\desktop\SmokeTest\SmokeTest.robot
+    * *single run:*
+        robot -d .\report -i SmoketTest .\testcases\desktop\
+	robot -d .\report -i Regressivo .\testcases\desktop\
+	robot -d .\report -i MiniRegressivo .\testcases\desktop\
 
     * *run with report.html:*
-        robot --listener 'allure_robotframework;./allure_results' -d .\report .\testcases\desktop\SmokeTest\SmokeTest.robot
+    	rmdir allure-report
+	rmdir allure-results
+        robot --listener 'allure_robotframework;./allure-results' -d .\report -i SmoketTest .\testcases\desktop\
+	robot --listener 'allure_robotframework;./allure-results' -d .\report -i MiniRegressivo .\testcases\desktop\
+	robot --listener 'allure_robotframework;./allure-results' -d .\report -i Regressivo .\testcases\desktop\
+	allure generate allure-results --clean -o allure-report
+	allure open allure-report" ou "allure serve ./allure-results
 
     * *run with tags:*
-		robot --listener 'allure_robotframework;./allure_results' -d .\report -i SmoketTest .\testcases\desktop\SmokeTest\SmokeTest.robot
-
+	robot --listener 'allure_robotframework;./allure-results' -d .\report -i SmoketTest .\testcases\desktop\
+	robot --listener 'allure_robotframework;./allure-results' -d .\report -i MiniRegressivo .\testcases\desktop\
+	robot --listener 'allure_robotframework;./allure-results' -d .\report -i Regressivo .\testcases\desktop\
 
 ## MULTIPLOS COMANDOS 
 Você também pode mesclar a linha de comando, sendo assim você pode escolher uma determinada tag que se deseja executar dos seus testes, 
 podendo escolher também a massa de dados que irá utilizar.
 
+robot -d .\report -i SmoketTest .\testcases\desktop\
+robot -d .\report -i Regressivo .\testcases\desktop\
+robot -d .\report -i MiniRegressivo .\testcases\desktop\
 
-robot -d \report -i smoketest Testes
+robot --listener 'allure_robotframework;./allure-results' -d .\report -i SmoketTest .\testcases\desktop\
+robot --listener 'allure_robotframework;./allure-results' -d .\report -i MiniRegressivo .\testcases\desktop\
+robot --listener 'allure_robotframework;./allure-results' -d .\report -i Regressivo .\testcases\desktop\
 
 ### DETALHES DO COMANDOS
-| Comando                															| finalidade                                                     | 
+| Comando                							    | finalidade                                                     | 
 |-----------------------------------------------------------------------------------|--------------------------------------------------------------- |
-| robot -d               															| Especificar o diretório dos results da execução                |
-| robot -d .\report -t “Cenário 01: Pesquisar postagem Season Premiere” Testes		| Executar apenas um teste específico da suíte					 |
-| robot -N “Nome de Exemplo” -d ..\report Testes              						| Dando um nome à execução (para efeito de Log/Report) 			 |
-| robot -d \report -i smoketest Testes 												| Executando por TAGS											 |
+| robot -d               							    | Especificar o diretório dos results da execução                |
+| robot -d .\report -t “Cenário 01: Pesquisar postagem Season Premiere” Testes	    | Executar apenas um teste específico da suíte                   |
+| robot -N “Nome de Exemplo” -d ..\report Testes              			    | Dando um nome à execução (para efeito de Log/Report) 	     |
+| robot -d \report -i smoketest Testes 		    				    | Executando por TAGS					     |
 
 ## TESTES CONTINUOS
 
@@ -253,25 +285,25 @@ java -jar jenkins.war --httpPort=8080
 Obs.: "AutoSystem-SmokeTeste" é o nome do Job.
 
 ### PRE-REQUISITOS
-Visual Studio Code: https://code.visualstudio.com/download​
+Visual Studio Code: https://code.visualstudio.com/download
 
- Plugins:​
+ Plugins:
 
-    Robot Framework Language Server - Robocorp;​
+    Robot Framework Language Server - Robocorp;
 
-    Material Icon Theme;​
+    Material Icon Theme;
 
-Python: https://www.python.org/downloads/ - Version: 3.11​
+Python: https://www.python.org/downloads/ - Version: 3.11
 
-RPA Desktop: https://robocorp.com/docs/libraries/rpa-framework/rpa-desktop​
+RPA Desktop: https://robocorp.com/docs/libraries/rpa-framework/rpa-desktop
 
-RPAFramework-Recognition: https://pypi.org/project/rpaframework-recognition/​
+RPAFramework-Recognition: https://pypi.org/project/rpaframework-recognition/
 
-Allure-robotframework: https://pypi.org/project/allure-robotframework/​
+Allure-robotframework: https://pypi.org/project/allure-robotframework/
 
-    Baixar e configurar no Path do Windows: https://github.com/allure-framework/allure2/releases (Version: 2.22.0)​
+    Baixar e configurar no Path do Windows: https://github.com/allure-framework/allure2/releases (Version: 2.22.0)
 
-       Exemplo: C:\allure-2.22.0\bin -> Variáveis do ambiente -> Variáveis do sistema -> Path​
+       Exemplo: C:\allure-2.22.0\bin -> Variáveis do ambiente -> Variáveis do sistema -> Path
 
 Accessibility Insights For Windows (Inspector from elements): (https://accessibilityinsights.io/downloads/)
 
